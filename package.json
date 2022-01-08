@@ -6,6 +6,7 @@
   "author": "zakve <zaklas.martin@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "mongodb": "^4.3.0",
     "mongoose": "^5.13.5"
   }
 }
