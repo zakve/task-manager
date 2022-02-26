@@ -19,6 +19,23 @@ const sendWelcomeEmail = (email, name) => {
         })
 }
 
+const sendCancelationEmail = (email, name) => {
+    sgMail
+        .send({
+            to: email,
+            from: 'zaklas@centrum.cz',
+            subject: 'Sorry to see you go!',
+            text: `Goodbye, ${name}. I hope to see you back sometime soon.`
+        })
+        .then(() => {
+            console.log('Email sent')
+        })
+        .catch((error) => {
+            console.error(error)
+        })
+}
+
 module.exports = {
-    sendWelcomeEmail
+    sendWelcomeEmail,
+    sendCancelationEmail
 }
