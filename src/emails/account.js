@@ -3,8 +3,8 @@ require('dotenv').config();
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 
-const sendWelcomeEmail = (email, name) => {
-    sgMail
+const sendWelcomeEmail = async (email, name) => {
+    await sgMail
         .send({
             to: email,
             from: 'zaklas@centrum.cz',
@@ -19,8 +19,8 @@ const sendWelcomeEmail = (email, name) => {
         })
 }
 
-const sendCancelationEmail = (email, name) => {
-    sgMail
+const sendCancelationEmail = async (email, name) => {
+    await sgMail
         .send({
             to: email,
             from: 'zaklas@centrum.cz',
