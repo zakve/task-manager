@@ -5,6 +5,9 @@ NodeJS task management server with connection to mongoDB.
 > - MongoDB
 > - Mongoose
 > - Expresss
+> - Sendgrid
+> - Multer
+> - Supertest
 
 ## Instalation
 *	**Clone and install packages**
@@ -14,3 +17,16 @@ cd task-manager
 yarn install
 yarn run dev
 ```
+
+> Before run add `.env` file to root with
+  
+```
+PORT=****
+MONGODB_URL="****"
+TOKEN_SECRET_HASH="****"
+SENDGRID_API_KEY="****"
+```
+
+## Demo
+
+https://zakve-task-manager.herokuapp.com/
