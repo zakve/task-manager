@@ -1,7 +1,7 @@
 const request = require('supertest')
 const app = require('../src/app')
 const User = require('../src/models/user')
-const { userOneId, userOne, setupDatabase } = require('./fixtures/db')
+const { userOneId, userOne, userTwo, setupDatabase } = require('./fixtures/db')
 
 beforeEach(setupDatabase)
 
@@ -164,4 +164,47 @@ test('Should not update user with invalid password', async () => {
             password: 'test'
         })
         .expect(400)
+})
+
+test('Should not log out user if unauthenticated', async () => {
+    await request(app)
+        .post('/users/logout')
+        .send()
+        .expect(401)
+})
+
+test('Should not log out all user if unauthenticated', async () => {
+    await request(app)
+        .post('/users/logoutAll')
+        .send()
+        .expect(401)
+})
+
+test('Should log out', async () => {
+    await request(app)
+        .post('/users/logout')
+        .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+        .send()
+        .expect(200)
+
+    const doArraysIntersect
+        = (array1, array2) => array1.some(item1 => array2.includes(item1))
+
+    const user = await User.findById(userOneId)
+    expect(doArraysIntersect(user.tokens, userOne.tokens[0].token)).toBe(false)
+})
+
+test('Should log out All', async () => {
+    await request(app)
+        .post('/users/logoutAll')
+        .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+        .send()
+        .expect(200)
+
+    const doArraysIntersect
+        = (array1, array2) => array1.some(item1 => array2.includes(item1))
+
+    const user = await User.findById(userOneId)
+    expect(doArraysIntersect(user.tokens, userOne.tokens[0].token)).toBe(false)
+    expect(doArraysIntersect(user.tokens, userTwo.tokens[0].token)).toBe(false)
 })
